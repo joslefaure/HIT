@@ -102,7 +102,7 @@ def get_extensions():
 
 setup(
     name="hit",
-    author="yelantf",
+    author="joslefaure",
     url="",
     ext_modules=get_extensions(),
     packages=find_packages(".", exclude=[
