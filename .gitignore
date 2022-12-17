@@ -1,0 +1,43 @@
+# compilation and distribution
+__pycache__
+_ext
+*.pyc
+*.so
+*.egg-info/
+build/
+dist/
+
+# pytorch/python/numpy formats
+*.pth
+*.pkl
+*.npy
+*.pt
+
+# ipython/jupyter notebooks
+*.ipynb
+**/.ipynb_checkpoints/
+
+# Editor temporaries
+*.swn
+*.swo
+*.swp
+*~
+.DS_Store
+.vscode
+.flake
+
+# Pycharm editor settings
+.idea
+
+# project dirs
+/datasets
+/models
+/data
+/detector/nms/src/soft_nms_cpu.cpp
+
+# unwanted files
+create_video_map.py
+environment.yml
+requirements.txt
+/demo
+/tools

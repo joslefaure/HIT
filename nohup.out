@@ -1,0 +1,800 @@
+2022-12-18 00:50:41,600 hit INFO: Using 1 GPUs
+2022-12-18 00:50:41,600 hit INFO: Namespace(adjust_lr=False, config_file='config_files/hitnet.yaml', distributed=False, local_rank=0, no_head=True, opts=[], seed=2, skip_test=False, skip_val=True, tfboard=True, transfer_weight=True)
+2022-12-18 00:50:41,600 hit INFO: Collecting env info (might take some time)
+2022-12-18 00:50:46,173 hit INFO: 
+PyTorch version: 1.7.1
+Is debug build: False
+CUDA used to build PyTorch: 10.2
+ROCM used to build PyTorch: N/A
+
+OS: Ubuntu 16.04.6 LTS (x86_64)
+GCC version: (Ubuntu 5.5.0-12ubuntu1~16.04) 5.5.0 20171010
+Clang version: Could not collect
+CMake version: version 3.5.1
+
+Python version: 3.7 (64-bit runtime)
+Is CUDA available: True
+CUDA runtime version: 10.2.89
+GPU models and configuration: 
+GPU 0: GeForce GTX 1080 Ti
+GPU 1: GeForce GTX 1080 Ti
+
+Nvidia driver version: 460.73.01
+cuDNN version: Probably one of the following:
+/usr/lib/x86_64-linux-gnu/libcudnn.so.7.6.4
+/usr/lib/x86_64-linux-gnu/libcudnn.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_adv_infer.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_adv_train.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_cnn_infer.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_cnn_train.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_ops_infer.so.8.0.5
+/usr/lib/x86_64-linux-gnu/libcudnn_ops_train.so.8.0.5
+HIP runtime version: N/A
+MIOpen runtime version: N/A
+
+Versions of relevant libraries:
+[pip3] numpy==1.21.5
+[pip3] torch==1.7.1
+[pip3] torchvision==0.8.2
+[conda] Could not collect
+2022-12-18 00:50:46,174 hit INFO: Loaded configuration file config_files/hitnet.yaml
+2022-12-18 00:50:46,174 hit INFO: 
+MODEL:
+  WEIGHT: "/home/josmy/Code/AlphAction_old/data/models/pretrained_models/SlowFast-ResNet50-4x16.pth"
+  BACKBONE:
+    CONV_BODY: "Slowfast-Resnet50"
+    FROZEN_BN: True
+    SLOWFAST:
+      BETA: 0.125
+      LATERAL: "tconv"
+      SLOW:
+        ACTIVE: True
+        CONV3_NONLOCAL: False
+        CONV4_NONLOCAL: False
+      FAST:
+        ACTIVE: True
+        CONV3_NONLOCAL: False
+        CONV4_NONLOCAL: False
+  NONLOCAL:
+    USE_ZERO_INIT_CONV: False
+    BN_INIT_GAMMA: 0.0
+    FROZEN_BN: True
+  ROI_ACTION_HEAD:
+    FEATURE_EXTRACTOR: "2MLPFeatureExtractor"
+    POOLER_TYPE: "align3d"
+    MEAN_BEFORE_POOLER: True
+    POOLER_RESOLUTION: 7
+    POOLER_SCALE: 0.0625
+    POOLER_SAMPLING_RATIO: 0
+    NUM_CLASSES: 21
+    PROPOSAL_PER_CLIP: 10
+    DROPOUT_RATE: 0.2
+  HIT_STRUCTURE:
+    ACTIVE: True
+    STRUCTURE: "hitnet"
+    DROPOUT: 0.2
+    FUSION: "add"
+    TEMPORAL_POSITION: True
+    USE_ZERO_INIT_CONV: True
+    LAYER_NORM: True
+    MAX_PERSON: 25
+    MAX_HAND: 10
+    MAX_OBJECT: 5
+    MAX_PER_SEC: 5
+    DIM_INNER: 1024
+    DIM_OUT: 2304
+    I_BLOCK_LIST: [ "P", "O", "H", "M", "P", "O", "H", "M", ]
+INPUT:
+  FRAME_NUM: 32
+  FRAME_SAMPLE_RATE: 1
+  TAU: 4
+  ALPHA: 1
+  SLOW_JITTER: True
+  COLOR_JITTER: True
+DATASETS:
+  TRAIN: ("jhmdb_train",)
+  TEST: ("jhmdb_val",)
+DATALOADER:
+  NUM_WORKERS: 8
+  SIZE_DIVISIBILITY: 16
+SOLVER:
+  BASE_LR: 0.0002
+  WARMUP_FACTOR: 0.25
+  BIAS_LR_FACTOR: 2
+  IA_LR_FACTOR: 10.0
+  WEIGHT_DECAY: 1e-7
+  STEPS: (20000, 25000)
+  WARMUP_ITERS: 700
+  MAX_ITER: 7000
+  CHECKPOINT_PERIOD: 7000
+  EVAL_PERIOD: 25000
+  VIDEOS_PER_BATCH: 8
+TEST:
+  BOX_THRESH: 0.
+  ACTION_THRESH: 0.
+  VIDEOS_PER_BATCH: 8
+OUTPUT_DIR: "data/output/dense_serial_debug"
+2022-12-18 00:50:46,174 hit INFO: Running with config:
+DATALOADER:
+  ASPECT_RATIO_GROUPING: True
+  NUM_WORKERS: 8
+  SIZE_DIVISIBILITY: 16
+DATASETS:
+  TEST: ('jhmdb_val',)
+  TRAIN: ('jhmdb_train',)
+INPUT:
+  ALPHA: 1
+  COLOR_JITTER: True
+  FRAME_NUM: 32
+  FRAME_SAMPLE_RATE: 1
+  HUE_JITTER: 20.0
+  MAX_SIZE_TEST: 464
+  MAX_SIZE_TRAIN: 464
+  MIN_SIZE_TEST: 256
+  MIN_SIZE_TRAIN: 256
+  PIXEL_MEAN: [122.7717, 115.9465, 102.9801]
+  PIXEL_STD: [57.375, 57.375, 57.375]
+  SAT_JITTER: 0.1
+  SLOW_JITTER: True
+  TAU: 4
+  TO_BGR: False
+  VAL_JITTER: 0.1
+MODEL:
+  BACKBONE:
+    BN_EPSILON: 1e-05
+    BN_INIT_GAMMA: 0.0
+    BN_MOMENTUM: 0.1
+    CONV_BODY: Slowfast-Resnet50
+    FROZEN_BN: True
+    I3D:
+      CONV3_GROUP_NL: False
+      CONV3_NONLOCAL: True
+      CONV4_NONLOCAL: True
+    SLOWFAST:
+      BETA: 0.125
+      FAST:
+        ACTIVE: True
+        CONV3_GROUP_NL: False
+        CONV3_NONLOCAL: False
+        CONV4_NONLOCAL: False
+      LATERAL: tconv
+      SLOW:
+        ACTIVE: True
+        CONV3_GROUP_NL: False
+        CONV3_NONLOCAL: False
+        CONV4_NONLOCAL: False
+  HIT_STRUCTURE:
+    ACTIVE: True
+    CONV_INIT_STD: 0.01
+    DIM_IN: 2304
+    DIM_INNER: 1024
+    DIM_OUT: 2304
+    DROPOUT: 0.2
+    FUSION: add
+    I_BLOCK_LIST: ['P', 'O', 'H', 'M', 'P', 'O', 'H', 'M']
+    LAYER_NORM: True
+    LENGTH: (30, 30)
+    MAX_HAND: 10
+    MAX_OBJECT: 5
+    MAX_PERSON: 25
+    MAX_PER_SEC: 5
+    MEMORY_RATE: 1
+    NO_BIAS: False
+    PENALTY: True
+    ROI_DIM_REDUCE: True
+    STRUCTURE: hitnet
+    TEMPORAL_POSITION: True
+    USE_ZERO_INIT_CONV: True
+  NONLOCAL:
+    BN_EPSILON: 1e-05
+    BN_INIT_GAMMA: 0.0
+    BN_MOMENTUM: 0.1
+    CONV_INIT_STD: 0.01
+    FROZEN_BN: True
+    NO_BIAS: False
+    USE_BN: True
+    USE_MAXPOOL: True
+    USE_SCALE: True
+    USE_SOFTMAX: True
+    USE_ZERO_INIT_CONV: False
+  ROI_ACTION_HEAD:
+    DROPOUT_RATE: 0.2
+    FEATURE_EXTRACTOR: 2MLPFeatureExtractor
+    FOCAL_LOSS:
+      ALPHA: -1.0
+      GAMMA: 2.0
+    MEAN_BEFORE_POOLER: True
+    MLP_HEAD_DIM: 1024
+    NUM_CLASSES: 21
+    NUM_OBJECT_MANIPULATION_CLASSES: 0
+    NUM_PERSON_INTERACTION_CLASSES: 0
+    NUM_PERSON_MOVEMENT_CLASSES: 21
+    OBJECT_LOSS_WEIGHT: 0.0
+    PERSON_LOSS_WEIGHT: 0.0
+    POOLER_RESOLUTION: 7
+    POOLER_SAMPLING_RATIO: 0
+    POOLER_SCALE: 0.0625
+    POOLER_TYPE: align3d
+    POSE_LOSS_WEIGHT: 1.2
+    PREDICTOR: FCPredictor
+    PROPOSAL_PER_CLIP: 10
+  WEIGHT: /home/josmy/Code/AlphAction_old/data/models/pretrained_models/SlowFast-ResNet50-4x16.pth
+OUTPUT_DIR: data/output/dense_serial_debug
+SOLVER:
+  BASE_LR: 0.0002
+  BIAS_LR_FACTOR: 2
+  CHECKPOINT_PERIOD: 7000
+  EVAL_PERIOD: 25000
+  GAMMA: 0.1
+  IA_LR_FACTOR: 10.0
+  MAX_ITER: 7000
+  MOMENTUM: 0.9
+  SCHEDULER: warmup_multi_step
+  STEPS: (20000, 25000)
+  VIDEOS_PER_BATCH: 8
+  WARMUP_FACTOR: 0.25
+  WARMUP_ITERS: 700
+  WARMUP_METHOD: linear
+  WARMUP_ON: True
+  WEIGHT_DECAY: 1e-07
+  WEIGHT_DECAY_BIAS: 0.0
+  WEIGHT_DECAY_BN: 0.0
+TEST:
+  ACTION_THRESH: 0.0
+  BOX_THRESH: 0.0
+  EXTEND_SCALE: (0.1, 0.05)
+  VIDEOS_PER_BATCH: 8
+2022-12-18 00:50:49,772 hit.utils.checkpoint INFO: Loading checkpoint from /home/josmy/Code/AlphAction_old/data/models/pretrained_models/SlowFast-ResNet50-4x16.pth
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv1.conv.bias                                                        loaded from backbone.fast.Tconv1.conv.bias                                of shape (16,)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv1.conv.weight                                                      loaded from backbone.fast.Tconv1.conv.weight                              of shape (16, 8, 5, 1, 1)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv2.conv.bias                                                        loaded from backbone.fast.Tconv2.conv.bias                                of shape (64,)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv2.conv.weight                                                      loaded from backbone.fast.Tconv2.conv.weight                              of shape (64, 32, 5, 1, 1)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv3.conv.bias                                                        loaded from backbone.fast.Tconv3.conv.bias                                of shape (128,)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv3.conv.weight                                                      loaded from backbone.fast.Tconv3.conv.weight                              of shape (128, 64, 5, 1, 1)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv4.conv.bias                                                        loaded from backbone.fast.Tconv4.conv.bias                                of shape (256,)
+2022-12-18 00:50:49,880 hit.utils.model_serialization INFO: backbone.fast.Tconv4.conv.weight                                                      loaded from backbone.fast.Tconv4.conv.weight                              of shape (256, 128, 5, 1, 1)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.bn1.bias                                                                loaded from backbone.fast.bn1.bias                                        of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.bn1.running_mean                                                        loaded from backbone.fast.bn1.running_mean                                of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.bn1.running_var                                                         loaded from backbone.fast.bn1.running_var                                 of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.bn1.weight                                                              loaded from backbone.fast.bn1.weight                                      of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.conv1.weight                                                            loaded from backbone.fast.conv1.weight                                    of shape (8, 3, 5, 7, 7)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl1.res_0.btnk.conv1.bn.bias                of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl1.res_0.btnk.conv1.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl1.res_0.btnk.conv1.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl1.res_0.btnk.conv1.bn.weight              of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl1.res_0.btnk.conv1.conv.weight            of shape (8, 8, 3, 1, 1)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl1.res_0.btnk.conv2.bn.bias                of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl1.res_0.btnk.conv2.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl1.res_0.btnk.conv2.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl1.res_0.btnk.conv2.bn.weight              of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl1.res_0.btnk.conv2.conv.weight            of shape (8, 8, 1, 3, 3)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl1.res_0.btnk.conv3.bn.bias                of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl1.res_0.btnk.conv3.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl1.res_0.btnk.conv3.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl1.res_0.btnk.conv3.bn.weight              of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl1.res_0.btnk.conv3.conv.weight            of shape (32, 8, 1, 1, 1)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.shortcut.bn.bias                                          loaded from backbone.fast.res_nl1.res_0.shortcut.bn.bias                  of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.shortcut.bn.running_mean                                  loaded from backbone.fast.res_nl1.res_0.shortcut.bn.running_mean          of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.shortcut.bn.running_var                                   loaded from backbone.fast.res_nl1.res_0.shortcut.bn.running_var           of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.shortcut.bn.weight                                        loaded from backbone.fast.res_nl1.res_0.shortcut.bn.weight                of shape (32,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_0.shortcut.conv.weight                                      loaded from backbone.fast.res_nl1.res_0.shortcut.conv.weight              of shape (32, 8, 1, 1, 1)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl1.res_1.btnk.conv1.bn.bias                of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl1.res_1.btnk.conv1.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,881 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl1.res_1.btnk.conv1.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl1.res_1.btnk.conv1.bn.weight              of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl1.res_1.btnk.conv1.conv.weight            of shape (8, 32, 3, 1, 1)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl1.res_1.btnk.conv2.bn.bias                of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl1.res_1.btnk.conv2.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl1.res_1.btnk.conv2.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl1.res_1.btnk.conv2.bn.weight              of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl1.res_1.btnk.conv2.conv.weight            of shape (8, 8, 1, 3, 3)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl1.res_1.btnk.conv3.bn.bias                of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl1.res_1.btnk.conv3.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl1.res_1.btnk.conv3.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl1.res_1.btnk.conv3.bn.weight              of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_1.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl1.res_1.btnk.conv3.conv.weight            of shape (32, 8, 1, 1, 1)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl1.res_2.btnk.conv1.bn.bias                of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl1.res_2.btnk.conv1.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl1.res_2.btnk.conv1.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl1.res_2.btnk.conv1.bn.weight              of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl1.res_2.btnk.conv1.conv.weight            of shape (8, 32, 3, 1, 1)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl1.res_2.btnk.conv2.bn.bias                of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl1.res_2.btnk.conv2.bn.running_mean        of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl1.res_2.btnk.conv2.bn.running_var         of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl1.res_2.btnk.conv2.bn.weight              of shape (8,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl1.res_2.btnk.conv2.conv.weight            of shape (8, 8, 1, 3, 3)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl1.res_2.btnk.conv3.bn.bias                of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl1.res_2.btnk.conv3.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl1.res_2.btnk.conv3.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl1.res_2.btnk.conv3.bn.weight              of shape (32,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl1.res_2.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl1.res_2.btnk.conv3.conv.weight            of shape (32, 8, 1, 1, 1)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl2.res_0.btnk.conv1.bn.bias                of shape (16,)
+2022-12-18 00:50:49,882 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl2.res_0.btnk.conv1.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl2.res_0.btnk.conv1.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl2.res_0.btnk.conv1.bn.weight              of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl2.res_0.btnk.conv1.conv.weight            of shape (16, 32, 3, 1, 1)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl2.res_0.btnk.conv2.bn.bias                of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl2.res_0.btnk.conv2.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl2.res_0.btnk.conv2.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl2.res_0.btnk.conv2.bn.weight              of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl2.res_0.btnk.conv2.conv.weight            of shape (16, 16, 1, 3, 3)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl2.res_0.btnk.conv3.bn.bias                of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl2.res_0.btnk.conv3.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl2.res_0.btnk.conv3.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl2.res_0.btnk.conv3.bn.weight              of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl2.res_0.btnk.conv3.conv.weight            of shape (64, 16, 1, 1, 1)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.shortcut.bn.bias                                          loaded from backbone.fast.res_nl2.res_0.shortcut.bn.bias                  of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.shortcut.bn.running_mean                                  loaded from backbone.fast.res_nl2.res_0.shortcut.bn.running_mean          of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.shortcut.bn.running_var                                   loaded from backbone.fast.res_nl2.res_0.shortcut.bn.running_var           of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.shortcut.bn.weight                                        loaded from backbone.fast.res_nl2.res_0.shortcut.bn.weight                of shape (64,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_0.shortcut.conv.weight                                      loaded from backbone.fast.res_nl2.res_0.shortcut.conv.weight              of shape (64, 32, 1, 1, 1)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl2.res_1.btnk.conv1.bn.bias                of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl2.res_1.btnk.conv1.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl2.res_1.btnk.conv1.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl2.res_1.btnk.conv1.bn.weight              of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl2.res_1.btnk.conv1.conv.weight            of shape (16, 64, 3, 1, 1)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl2.res_1.btnk.conv2.bn.bias                of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl2.res_1.btnk.conv2.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl2.res_1.btnk.conv2.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl2.res_1.btnk.conv2.bn.weight              of shape (16,)
+2022-12-18 00:50:49,883 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl2.res_1.btnk.conv2.conv.weight            of shape (16, 16, 1, 3, 3)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl2.res_1.btnk.conv3.bn.bias                of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl2.res_1.btnk.conv3.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl2.res_1.btnk.conv3.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl2.res_1.btnk.conv3.bn.weight              of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_1.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl2.res_1.btnk.conv3.conv.weight            of shape (64, 16, 1, 1, 1)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl2.res_2.btnk.conv1.bn.bias                of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl2.res_2.btnk.conv1.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl2.res_2.btnk.conv1.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl2.res_2.btnk.conv1.bn.weight              of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl2.res_2.btnk.conv1.conv.weight            of shape (16, 64, 3, 1, 1)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl2.res_2.btnk.conv2.bn.bias                of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl2.res_2.btnk.conv2.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl2.res_2.btnk.conv2.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl2.res_2.btnk.conv2.bn.weight              of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl2.res_2.btnk.conv2.conv.weight            of shape (16, 16, 1, 3, 3)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl2.res_2.btnk.conv3.bn.bias                of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl2.res_2.btnk.conv3.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl2.res_2.btnk.conv3.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl2.res_2.btnk.conv3.bn.weight              of shape (64,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_2.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl2.res_2.btnk.conv3.conv.weight            of shape (64, 16, 1, 1, 1)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl2.res_3.btnk.conv1.bn.bias                of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl2.res_3.btnk.conv1.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl2.res_3.btnk.conv1.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl2.res_3.btnk.conv1.bn.weight              of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl2.res_3.btnk.conv1.conv.weight            of shape (16, 64, 3, 1, 1)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl2.res_3.btnk.conv2.bn.bias                of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl2.res_3.btnk.conv2.bn.running_mean        of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl2.res_3.btnk.conv2.bn.running_var         of shape (16,)
+2022-12-18 00:50:49,884 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl2.res_3.btnk.conv2.bn.weight              of shape (16,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl2.res_3.btnk.conv2.conv.weight            of shape (16, 16, 1, 3, 3)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl2.res_3.btnk.conv3.bn.bias                of shape (64,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl2.res_3.btnk.conv3.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl2.res_3.btnk.conv3.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl2.res_3.btnk.conv3.bn.weight              of shape (64,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl2.res_3.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl2.res_3.btnk.conv3.conv.weight            of shape (64, 16, 1, 1, 1)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_0.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_0.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_0.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_0.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_0.btnk.conv1.conv.weight            of shape (32, 64, 3, 1, 1)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_0.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_0.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_0.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_0.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_0.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_0.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_0.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_0.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_0.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_0.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.shortcut.bn.bias                                          loaded from backbone.fast.res_nl3.res_0.shortcut.bn.bias                  of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.shortcut.bn.running_mean                                  loaded from backbone.fast.res_nl3.res_0.shortcut.bn.running_mean          of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.shortcut.bn.running_var                                   loaded from backbone.fast.res_nl3.res_0.shortcut.bn.running_var           of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.shortcut.bn.weight                                        loaded from backbone.fast.res_nl3.res_0.shortcut.bn.weight                of shape (128,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_0.shortcut.conv.weight                                      loaded from backbone.fast.res_nl3.res_0.shortcut.conv.weight              of shape (128, 64, 1, 1, 1)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_1.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,885 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_1.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_1.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_1.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_1.btnk.conv1.conv.weight            of shape (32, 128, 3, 1, 1)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_1.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_1.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_1.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_1.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_1.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_1.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_1.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_1.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_1.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_1.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_1.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_2.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_2.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_2.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_2.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_2.btnk.conv1.conv.weight            of shape (32, 128, 3, 1, 1)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_2.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_2.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_2.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_2.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_2.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_2.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_2.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_2.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_2.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_2.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_2.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_3.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,886 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_3.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_3.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_3.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_3.btnk.conv1.conv.weight            of shape (32, 128, 3, 1, 1)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_3.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_3.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_3.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_3.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_3.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_3.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_3.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_3.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_3.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_3.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_3.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_4.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_4.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_4.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_4.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_4.btnk.conv1.conv.weight            of shape (32, 128, 3, 1, 1)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_4.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_4.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_4.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_4.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_4.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_4.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_4.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_4.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,887 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_4.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_4.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_4.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl3.res_5.btnk.conv1.bn.bias                of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl3.res_5.btnk.conv1.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl3.res_5.btnk.conv1.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl3.res_5.btnk.conv1.bn.weight              of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl3.res_5.btnk.conv1.conv.weight            of shape (32, 128, 3, 1, 1)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl3.res_5.btnk.conv2.bn.bias                of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl3.res_5.btnk.conv2.bn.running_mean        of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl3.res_5.btnk.conv2.bn.running_var         of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl3.res_5.btnk.conv2.bn.weight              of shape (32,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl3.res_5.btnk.conv2.conv.weight            of shape (32, 32, 1, 3, 3)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl3.res_5.btnk.conv3.bn.bias                of shape (128,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl3.res_5.btnk.conv3.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl3.res_5.btnk.conv3.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl3.res_5.btnk.conv3.bn.weight              of shape (128,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl3.res_5.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl3.res_5.btnk.conv3.conv.weight            of shape (128, 32, 1, 1, 1)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl4.res_0.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl4.res_0.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl4.res_0.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl4.res_0.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl4.res_0.btnk.conv1.conv.weight            of shape (64, 128, 3, 1, 1)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl4.res_0.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl4.res_0.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl4.res_0.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl4.res_0.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl4.res_0.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl4.res_0.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,888 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl4.res_0.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl4.res_0.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl4.res_0.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl4.res_0.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.shortcut.bn.bias                                          loaded from backbone.fast.res_nl4.res_0.shortcut.bn.bias                  of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.shortcut.bn.running_mean                                  loaded from backbone.fast.res_nl4.res_0.shortcut.bn.running_mean          of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.shortcut.bn.running_var                                   loaded from backbone.fast.res_nl4.res_0.shortcut.bn.running_var           of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.shortcut.bn.weight                                        loaded from backbone.fast.res_nl4.res_0.shortcut.bn.weight                of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_0.shortcut.conv.weight                                      loaded from backbone.fast.res_nl4.res_0.shortcut.conv.weight              of shape (256, 128, 1, 1, 1)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl4.res_1.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl4.res_1.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl4.res_1.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl4.res_1.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl4.res_1.btnk.conv1.conv.weight            of shape (64, 256, 3, 1, 1)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl4.res_1.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl4.res_1.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl4.res_1.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl4.res_1.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl4.res_1.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl4.res_1.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl4.res_1.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl4.res_1.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl4.res_1.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_1.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl4.res_1.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv1.bn.bias                                        loaded from backbone.fast.res_nl4.res_2.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.fast.res_nl4.res_2.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.fast.res_nl4.res_2.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv1.bn.weight                                      loaded from backbone.fast.res_nl4.res_2.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv1.conv.weight                                    loaded from backbone.fast.res_nl4.res_2.btnk.conv1.conv.weight            of shape (64, 256, 3, 1, 1)
+2022-12-18 00:50:49,889 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv2.bn.bias                                        loaded from backbone.fast.res_nl4.res_2.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.fast.res_nl4.res_2.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.fast.res_nl4.res_2.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv2.bn.weight                                      loaded from backbone.fast.res_nl4.res_2.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv2.conv.weight                                    loaded from backbone.fast.res_nl4.res_2.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv3.bn.bias                                        loaded from backbone.fast.res_nl4.res_2.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.fast.res_nl4.res_2.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.fast.res_nl4.res_2.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv3.bn.weight                                      loaded from backbone.fast.res_nl4.res_2.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.fast.res_nl4.res_2.btnk.conv3.conv.weight                                    loaded from backbone.fast.res_nl4.res_2.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.bn1.bias                                                                loaded from backbone.slow.bn1.bias                                        of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.bn1.running_mean                                                        loaded from backbone.slow.bn1.running_mean                                of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.bn1.running_var                                                         loaded from backbone.slow.bn1.running_var                                 of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.bn1.weight                                                              loaded from backbone.slow.bn1.weight                                      of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.conv1.weight                                                            loaded from backbone.slow.conv1.weight                                    of shape (64, 3, 1, 7, 7)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl1.res_0.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl1.res_0.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl1.res_0.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl1.res_0.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl1.res_0.btnk.conv1.conv.weight            of shape (64, 80, 1, 1, 1)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl1.res_0.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl1.res_0.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl1.res_0.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl1.res_0.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl1.res_0.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl1.res_0.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl1.res_0.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl1.res_0.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl1.res_0.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,890 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl1.res_0.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.shortcut.bn.bias                                          loaded from backbone.slow.res_nl1.res_0.shortcut.bn.bias                  of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.shortcut.bn.running_mean                                  loaded from backbone.slow.res_nl1.res_0.shortcut.bn.running_mean          of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.shortcut.bn.running_var                                   loaded from backbone.slow.res_nl1.res_0.shortcut.bn.running_var           of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.shortcut.bn.weight                                        loaded from backbone.slow.res_nl1.res_0.shortcut.bn.weight                of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_0.shortcut.conv.weight                                      loaded from backbone.slow.res_nl1.res_0.shortcut.conv.weight              of shape (256, 80, 1, 1, 1)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl1.res_1.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl1.res_1.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl1.res_1.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl1.res_1.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl1.res_1.btnk.conv1.conv.weight            of shape (64, 256, 1, 1, 1)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl1.res_1.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl1.res_1.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl1.res_1.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl1.res_1.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl1.res_1.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl1.res_1.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl1.res_1.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl1.res_1.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl1.res_1.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_1.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl1.res_1.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl1.res_2.btnk.conv1.bn.bias                of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl1.res_2.btnk.conv1.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl1.res_2.btnk.conv1.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl1.res_2.btnk.conv1.bn.weight              of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl1.res_2.btnk.conv1.conv.weight            of shape (64, 256, 1, 1, 1)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl1.res_2.btnk.conv2.bn.bias                of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl1.res_2.btnk.conv2.bn.running_mean        of shape (64,)
+2022-12-18 00:50:49,891 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl1.res_2.btnk.conv2.bn.running_var         of shape (64,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl1.res_2.btnk.conv2.bn.weight              of shape (64,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl1.res_2.btnk.conv2.conv.weight            of shape (64, 64, 1, 3, 3)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl1.res_2.btnk.conv3.bn.bias                of shape (256,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl1.res_2.btnk.conv3.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl1.res_2.btnk.conv3.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl1.res_2.btnk.conv3.bn.weight              of shape (256,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl1.res_2.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl1.res_2.btnk.conv3.conv.weight            of shape (256, 64, 1, 1, 1)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl2.res_0.btnk.conv1.bn.bias                of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl2.res_0.btnk.conv1.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl2.res_0.btnk.conv1.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl2.res_0.btnk.conv1.bn.weight              of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl2.res_0.btnk.conv1.conv.weight            of shape (128, 320, 1, 1, 1)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl2.res_0.btnk.conv2.bn.bias                of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl2.res_0.btnk.conv2.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl2.res_0.btnk.conv2.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl2.res_0.btnk.conv2.bn.weight              of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl2.res_0.btnk.conv2.conv.weight            of shape (128, 128, 1, 3, 3)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl2.res_0.btnk.conv3.bn.bias                of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl2.res_0.btnk.conv3.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl2.res_0.btnk.conv3.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl2.res_0.btnk.conv3.bn.weight              of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl2.res_0.btnk.conv3.conv.weight            of shape (512, 128, 1, 1, 1)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.shortcut.bn.bias                                          loaded from backbone.slow.res_nl2.res_0.shortcut.bn.bias                  of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.shortcut.bn.running_mean                                  loaded from backbone.slow.res_nl2.res_0.shortcut.bn.running_mean          of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.shortcut.bn.running_var                                   loaded from backbone.slow.res_nl2.res_0.shortcut.bn.running_var           of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.shortcut.bn.weight                                        loaded from backbone.slow.res_nl2.res_0.shortcut.bn.weight                of shape (512,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_0.shortcut.conv.weight                                      loaded from backbone.slow.res_nl2.res_0.shortcut.conv.weight              of shape (512, 320, 1, 1, 1)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl2.res_1.btnk.conv1.bn.bias                of shape (128,)
+2022-12-18 00:50:49,892 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl2.res_1.btnk.conv1.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl2.res_1.btnk.conv1.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl2.res_1.btnk.conv1.bn.weight              of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl2.res_1.btnk.conv1.conv.weight            of shape (128, 512, 1, 1, 1)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl2.res_1.btnk.conv2.bn.bias                of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl2.res_1.btnk.conv2.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl2.res_1.btnk.conv2.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl2.res_1.btnk.conv2.bn.weight              of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl2.res_1.btnk.conv2.conv.weight            of shape (128, 128, 1, 3, 3)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl2.res_1.btnk.conv3.bn.bias                of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl2.res_1.btnk.conv3.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl2.res_1.btnk.conv3.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl2.res_1.btnk.conv3.bn.weight              of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_1.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl2.res_1.btnk.conv3.conv.weight            of shape (512, 128, 1, 1, 1)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl2.res_2.btnk.conv1.bn.bias                of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl2.res_2.btnk.conv1.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl2.res_2.btnk.conv1.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl2.res_2.btnk.conv1.bn.weight              of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl2.res_2.btnk.conv1.conv.weight            of shape (128, 512, 1, 1, 1)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl2.res_2.btnk.conv2.bn.bias                of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl2.res_2.btnk.conv2.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl2.res_2.btnk.conv2.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl2.res_2.btnk.conv2.bn.weight              of shape (128,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl2.res_2.btnk.conv2.conv.weight            of shape (128, 128, 1, 3, 3)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl2.res_2.btnk.conv3.bn.bias                of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl2.res_2.btnk.conv3.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl2.res_2.btnk.conv3.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl2.res_2.btnk.conv3.bn.weight              of shape (512,)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_2.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl2.res_2.btnk.conv3.conv.weight            of shape (512, 128, 1, 1, 1)
+2022-12-18 00:50:49,893 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl2.res_3.btnk.conv1.bn.bias                of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl2.res_3.btnk.conv1.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl2.res_3.btnk.conv1.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl2.res_3.btnk.conv1.bn.weight              of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl2.res_3.btnk.conv1.conv.weight            of shape (128, 512, 1, 1, 1)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl2.res_3.btnk.conv2.bn.bias                of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl2.res_3.btnk.conv2.bn.running_mean        of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl2.res_3.btnk.conv2.bn.running_var         of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl2.res_3.btnk.conv2.bn.weight              of shape (128,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl2.res_3.btnk.conv2.conv.weight            of shape (128, 128, 1, 3, 3)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl2.res_3.btnk.conv3.bn.bias                of shape (512,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl2.res_3.btnk.conv3.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl2.res_3.btnk.conv3.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl2.res_3.btnk.conv3.bn.weight              of shape (512,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl2.res_3.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl2.res_3.btnk.conv3.conv.weight            of shape (512, 128, 1, 1, 1)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_0.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_0.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_0.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_0.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_0.btnk.conv1.conv.weight            of shape (256, 640, 3, 1, 1)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_0.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_0.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_0.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_0.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_0.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_0.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_0.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_0.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_0.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,894 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_0.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.shortcut.bn.bias                                          loaded from backbone.slow.res_nl3.res_0.shortcut.bn.bias                  of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.shortcut.bn.running_mean                                  loaded from backbone.slow.res_nl3.res_0.shortcut.bn.running_mean          of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.shortcut.bn.running_var                                   loaded from backbone.slow.res_nl3.res_0.shortcut.bn.running_var           of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.shortcut.bn.weight                                        loaded from backbone.slow.res_nl3.res_0.shortcut.bn.weight                of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_0.shortcut.conv.weight                                      loaded from backbone.slow.res_nl3.res_0.shortcut.conv.weight              of shape (1024, 640, 1, 1, 1)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_1.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_1.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_1.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_1.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_1.btnk.conv1.conv.weight            of shape (256, 1024, 3, 1, 1)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_1.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_1.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_1.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_1.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_1.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_1.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_1.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_1.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_1.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_1.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_1.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_2.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_2.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_2.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_2.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_2.btnk.conv1.conv.weight            of shape (256, 1024, 3, 1, 1)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_2.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_2.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,895 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_2.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_2.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_2.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_2.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_2.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_2.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_2.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_2.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_2.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_3.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_3.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_3.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_3.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_3.btnk.conv1.conv.weight            of shape (256, 1024, 3, 1, 1)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_3.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_3.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_3.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_3.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_3.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_3.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_3.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_3.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_3.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_3.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_3.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_4.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_4.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_4.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_4.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_4.btnk.conv1.conv.weight            of shape (256, 1024, 3, 1, 1)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_4.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,896 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_4.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_4.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_4.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_4.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_4.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_4.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_4.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_4.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_4.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_4.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl3.res_5.btnk.conv1.bn.bias                of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl3.res_5.btnk.conv1.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl3.res_5.btnk.conv1.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl3.res_5.btnk.conv1.bn.weight              of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl3.res_5.btnk.conv1.conv.weight            of shape (256, 1024, 3, 1, 1)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl3.res_5.btnk.conv2.bn.bias                of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl3.res_5.btnk.conv2.bn.running_mean        of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl3.res_5.btnk.conv2.bn.running_var         of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl3.res_5.btnk.conv2.bn.weight              of shape (256,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl3.res_5.btnk.conv2.conv.weight            of shape (256, 256, 1, 3, 3)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl3.res_5.btnk.conv3.bn.bias                of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl3.res_5.btnk.conv3.bn.running_mean        of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl3.res_5.btnk.conv3.bn.running_var         of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl3.res_5.btnk.conv3.bn.weight              of shape (1024,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl3.res_5.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl3.res_5.btnk.conv3.conv.weight            of shape (1024, 256, 1, 1, 1)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl4.res_0.btnk.conv1.bn.bias                of shape (512,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl4.res_0.btnk.conv1.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl4.res_0.btnk.conv1.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl4.res_0.btnk.conv1.bn.weight              of shape (512,)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl4.res_0.btnk.conv1.conv.weight            of shape (512, 1280, 3, 1, 1)
+2022-12-18 00:50:49,897 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl4.res_0.btnk.conv2.bn.bias                of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl4.res_0.btnk.conv2.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl4.res_0.btnk.conv2.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl4.res_0.btnk.conv2.bn.weight              of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl4.res_0.btnk.conv2.conv.weight            of shape (512, 512, 1, 3, 3)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl4.res_0.btnk.conv3.bn.bias                of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl4.res_0.btnk.conv3.bn.running_mean        of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl4.res_0.btnk.conv3.bn.running_var         of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl4.res_0.btnk.conv3.bn.weight              of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl4.res_0.btnk.conv3.conv.weight            of shape (2048, 512, 1, 1, 1)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.shortcut.bn.bias                                          loaded from backbone.slow.res_nl4.res_0.shortcut.bn.bias                  of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.shortcut.bn.running_mean                                  loaded from backbone.slow.res_nl4.res_0.shortcut.bn.running_mean          of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.shortcut.bn.running_var                                   loaded from backbone.slow.res_nl4.res_0.shortcut.bn.running_var           of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.shortcut.bn.weight                                        loaded from backbone.slow.res_nl4.res_0.shortcut.bn.weight                of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_0.shortcut.conv.weight                                      loaded from backbone.slow.res_nl4.res_0.shortcut.conv.weight              of shape (2048, 1280, 1, 1, 1)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl4.res_1.btnk.conv1.bn.bias                of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl4.res_1.btnk.conv1.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl4.res_1.btnk.conv1.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl4.res_1.btnk.conv1.bn.weight              of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl4.res_1.btnk.conv1.conv.weight            of shape (512, 2048, 3, 1, 1)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl4.res_1.btnk.conv2.bn.bias                of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl4.res_1.btnk.conv2.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl4.res_1.btnk.conv2.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl4.res_1.btnk.conv2.bn.weight              of shape (512,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl4.res_1.btnk.conv2.conv.weight            of shape (512, 512, 1, 3, 3)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl4.res_1.btnk.conv3.bn.bias                of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl4.res_1.btnk.conv3.bn.running_mean        of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl4.res_1.btnk.conv3.bn.running_var         of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl4.res_1.btnk.conv3.bn.weight              of shape (2048,)
+2022-12-18 00:50:49,898 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_1.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl4.res_1.btnk.conv3.conv.weight            of shape (2048, 512, 1, 1, 1)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv1.bn.bias                                        loaded from backbone.slow.res_nl4.res_2.btnk.conv1.bn.bias                of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv1.bn.running_mean                                loaded from backbone.slow.res_nl4.res_2.btnk.conv1.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv1.bn.running_var                                 loaded from backbone.slow.res_nl4.res_2.btnk.conv1.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv1.bn.weight                                      loaded from backbone.slow.res_nl4.res_2.btnk.conv1.bn.weight              of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv1.conv.weight                                    loaded from backbone.slow.res_nl4.res_2.btnk.conv1.conv.weight            of shape (512, 2048, 3, 1, 1)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv2.bn.bias                                        loaded from backbone.slow.res_nl4.res_2.btnk.conv2.bn.bias                of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv2.bn.running_mean                                loaded from backbone.slow.res_nl4.res_2.btnk.conv2.bn.running_mean        of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv2.bn.running_var                                 loaded from backbone.slow.res_nl4.res_2.btnk.conv2.bn.running_var         of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv2.bn.weight                                      loaded from backbone.slow.res_nl4.res_2.btnk.conv2.bn.weight              of shape (512,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv2.conv.weight                                    loaded from backbone.slow.res_nl4.res_2.btnk.conv2.conv.weight            of shape (512, 512, 1, 3, 3)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv3.bn.bias                                        loaded from backbone.slow.res_nl4.res_2.btnk.conv3.bn.bias                of shape (2048,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv3.bn.running_mean                                loaded from backbone.slow.res_nl4.res_2.btnk.conv3.bn.running_mean        of shape (2048,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv3.bn.running_var                                 loaded from backbone.slow.res_nl4.res_2.btnk.conv3.bn.running_var         of shape (2048,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv3.bn.weight                                      loaded from backbone.slow.res_nl4.res_2.btnk.conv3.bn.weight              of shape (2048,)
+2022-12-18 00:50:49,899 hit.utils.model_serialization INFO: backbone.slow.res_nl4.res_2.btnk.conv3.conv.weight                                    loaded from backbone.slow.res_nl4.res_2.btnk.conv3.conv.weight            of shape (2048, 512, 1, 1, 1)
+loading annotations into memory...
+Done (t=0.08s)
+Loading box file into memory...
+Done (t=0.24s)
+Loading box file into memory...
+Done (t=0.84s)
+2022-12-18 00:50:51,836 hit.trainer INFO: Start training
+/home/josmy/anaconda3/envs/hit/lib/python3.7/site-packages/torch/nn/modules/container.py:552: UserWarning: Setting attributes on ParameterDict is not supported.
+  warnings.warn("Setting attributes on ParameterDict is not supported.")
+2022-12-18 00:51:31,747 hit.trainer INFO: eta: 3:52:08  iter: 20  loss_pose_action: 2.7548 (2.7682)  total_loss: 3.3057 (3.3218)  accuracy_pose_action: 0.0000 (0.0813)  time: 1.8220 (1.9955)  data: 0.0108 (0.1807)  lr: 0.000054  max mem: 9063
+2022-12-18 00:52:08,439 hit.trainer INFO: eta: 3:42:08  iter: 40  loss_pose_action: 2.6171 (2.6858)  total_loss: 3.1406 (3.2229)  accuracy_pose_action: 0.1250 (0.1156)  time: 1.8324 (1.9150)  data: 0.0192 (0.1005)  lr: 0.000058  max mem: 9063
+2022-12-18 00:52:45,202 hit.trainer INFO: eta: 3:38:32  iter: 60  loss_pose_action: 2.2437 (2.5313)  total_loss: 2.6925 (3.0376)  accuracy_pose_action: 0.2500 (0.1771)  time: 1.8415 (1.8894)  data: 0.0177 (0.0730)  lr: 0.000063  max mem: 9063
+2022-12-18 00:53:22,037 hit.trainer INFO: eta: 3:36:32  iter: 80  loss_pose_action: 1.4793 (2.2857)  total_loss: 1.7752 (2.7428)  accuracy_pose_action: 0.5000 (0.2547)  time: 1.8407 (1.8775)  data: 0.0180 (0.0592)  lr: 0.000067  max mem: 9063
+2022-12-18 00:53:58,932 hit.trainer INFO: eta: 3:35:09  iter: 100  loss_pose_action: 1.3211 (2.1003)  total_loss: 1.5854 (2.5204)  accuracy_pose_action: 0.5000 (0.3088)  time: 1.8423 (1.8709)  data: 0.0188 (0.0511)  lr: 0.000071  max mem: 9063
+2022-12-18 00:54:35,873 hit.trainer INFO: eta: 3:34:04  iter: 120  loss_pose_action: 0.8603 (1.8889)  total_loss: 1.0323 (2.2667)  accuracy_pose_action: 0.6250 (0.3708)  time: 1.8483 (1.8670)  data: 0.0188 (0.0457)  lr: 0.000076  max mem: 9063
