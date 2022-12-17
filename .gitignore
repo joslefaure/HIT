@@ -12,6 +12,7 @@ dist/
 *.pkl
 *.npy
 *.pt
+*.out
 
 # ipython/jupyter notebooks
 *.ipynb
@@ -41,3 +42,5 @@ environment.yml
 requirements.txt
 /demo
 /tools
+/timm
+

@@ -1,5 +1,5 @@
 MODEL:
-  WEIGHT: "/home/josmy/Code/AlphAction_old/data/models/pretrained_models/SlowFast-ResNet50-4x16.pth"
+  WEIGHT: "data/models/pretrained_models/SlowFast-ResNet50-4x16.pth"
   BACKBONE:
     CONV_BODY: "Slowfast-Resnet50"
     FROZEN_BN: True
@@ -72,4 +72,4 @@ TEST:
   BOX_THRESH: 0.
   ACTION_THRESH: 0.
   VIDEOS_PER_BATCH: 8
-OUTPUT_DIR: "data/output/dense_serial_debug"
+OUTPUT_DIR: "data/output/hitnet"

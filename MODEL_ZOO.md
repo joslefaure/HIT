@@ -11,9 +11,9 @@ The pretrained backbones, pretrained on Kinetics dataset is given by [Alphaction
 
 ### J-HMDB Model
 
-| config | backbone  | mAP | in paper | model |
-| ------------- | ------------- | ------------- | ------------- | ------------- |
-| [hitnet](config_files/hitnet.yaml) | SlowFast-R50 | 83.8 | 83.6 | [[link]]()
+| config | backbone  | mAP | model |
+| ------------- | ------------- | ------------- | ------------- |
+| [hitnet](config_files/hitnet.yaml) | SlowFast-R50 | 83.8 | [[link]]()
 
 ### AVA Model
 
