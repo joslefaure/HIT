@@ -15,7 +15,3 @@ symbolic link to the extracted files.
 
 ### Step-by-step Version (and how to prepare your own dataset for HIT)
 
-#### J-HMDB
-1. Download the raw dataset from this [Gdrive](https://drive.google.com/drive/folders/1BvGywlAGrACEqRyfYbz3wzlVV3cDFkct). The file name is `JHMDB.tar.gz`.
-
-2. Extract the 
