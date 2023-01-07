@@ -342,12 +342,11 @@ class HITNet(SerialHITStructure):
         
         self.dense_params_lateral = nn.ParameterDict()
         init_tensor_lateral = torch.full((len(self.I_block_list)//2, self.dim_inner, 1, 1, 1), 
-                                         -5 * math.log(10), dtype=torch.float32)
+                                         -2 * math.log(10), dtype=torch.float32)
         self.dense_params_lateral = nn.Parameter(init_tensor_lateral)
         
         self.softmax = nn.Softmax(dim=0)
         self.conv_reduce = nn.Conv3d(dim_mem, self.dim_inner, 1, bias=False)
-        self.conv_reduce_fuse = nn.Conv3d(2*self.dim_inner, self.dim_inner, 1, bias=False)
         
 
         self.non_local = NL(hidden_dim = 2*self.dim_inner, out_dim = self.dim_inner)
@@ -368,9 +367,7 @@ class HITNet(SerialHITStructure):
             name = block_type + "_block_{}".format(block_count[block_type])
             I_block = getattr(self, name)
 
-            # Initialize the units
-            name_person = 'P' + "_block_{}".format(block_count[block_type])
-            I_block_person = getattr(self, name_person)
+            # Initialize the lateral units
             name_object = 'O' + "_block_{}".format(block_count[block_type])
             I_block_object = getattr(self, name_object)
             name_hand = 'H' + "_block_{}".format(block_count[block_type])

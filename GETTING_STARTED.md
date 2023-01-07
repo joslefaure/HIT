@@ -51,3 +51,8 @@ our code first tries to load the `last_checkpoint` in the `OUTPUT_DIR`. If there
 python test_net.py --config-file "hitnet.yaml" \
 MODEL.WEIGHT "path/to/model/weight"
  ```
+The output files will be written to `OUTPUT_DIR/inference/detections`. To test the output against the groundtruths, first download the file `groundtruths_jhmdb.zip` from the [`YOWO`](https://github.com/wei-tim/YOWO/blob/master/evaluation_ucf24_jhmdb/groundtruths_jhmdb.zip) repository and unzip it inside `HIT/evaluation_ucf24_jhmdb`. Then run:
+```shell
+python evaluation_ucf24_jhmdb/pascalvoc.py --gtfolder groundtruths_jhmdb --detfolder PATH-TO-DETECTIONS-FOLDER
+```
+In our case `PATH-TO-DETECTIONS-FOLDER` would be `OUTPUT_DIR/inference/detections`.

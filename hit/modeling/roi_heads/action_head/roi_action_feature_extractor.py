@@ -111,7 +111,7 @@ class MLPFeatureExtractor(nn.Module):
 
 
                     # extend width and height by 50%
-                    proposals_hand = [box.extend((0.5, 0.5)) for box in hand_boxlists]
+                    proposals_hand = [box.extend((0.2, 0.8)) for box in hand_boxlists]
                     hands_pooled = self.roi_pooling(slow_features, fast_features, proposals_hand)
                     hands_pooled = self.max_pooling_zero_safe(hands_pooled)
             else:
@@ -123,7 +123,7 @@ class MLPFeatureExtractor(nn.Module):
             if pose_data.shape[0] == person_pooled.shape[0]:
                 self.pose_transformer = self.pose_transformer.to(keypoints[0].bbox.device)
                 pose_out = self.pose_transformer(pose_data)
-                pose_out = pose_out.view(-1, 1024).unsqueeze(2).unsqueeze(2).unsqueeze(2)
+                pose_out = pose_out.view(-1, self.pose_out).unsqueeze(2).unsqueeze(2).unsqueeze(2)
                 
             else:
                 pose_out = None

@@ -13,6 +13,7 @@ dist/
 *.npy
 *.pt
 *.out
+*.zip
 
 # ipython/jupyter notebooks
 *.ipynb

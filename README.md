@@ -5,6 +5,12 @@ This project is the official implementation of our paper
 [Holistic Interaction Transformer Network for Action Detection](https://arxiv.org/abs/2210.12686) (**WACV 2023**), authored
 by Gueter Josmy Faure, Min-Hung Chen and Shang-Hong Lai. 
 
+### TO DO
+
+- [ ] Demo Video
+- [ ] Detailed data preparation for custom dataset
+- [ ] Pretrained Models
+
 
 ## Demo Video
 
