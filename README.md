@@ -40,11 +40,13 @@ If this project helps you in your research or project, please cite
 this paper:
 
 ```
-@article{faure2022holistic,
-  title={Holistic Interaction Transformer Network for Action Detection},
-  author={Faure, Gueter Josmy and Chen, Min-Hung and Lai, Shang-Hong},
-  journal={arXiv preprint arXiv:2210.12686},
-  year={2022}
+@InProceedings{Faure_2023_WACV,
+    author    = {Faure, Gueter Josmy and Chen, Min-Hung and Lai, Shang-Hong},
+    title     = {Holistic Interaction Transformer Network for Action Detection},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {January},
+    year      = {2023},
+    pages     = {3340-3350}
 }
 ```
 
