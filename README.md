@@ -7,16 +7,16 @@ by Gueter Josmy Faure, Min-Hung Chen and Shang-Hong Lai.
 
 ### TO DO
 
-- [ ] Demo Video
 - [ ] Detailed data preparation for custom dataset
 - [ ] Pretrained Models
 
 
 ## Demo Video
 
-Coming Soon
+![output1](https://user-images.githubusercontent.com/84136752/213919371-4a124959-2c2f-4d4c-8b9d-837417b584fc.gif) &nbsp; ![output2](https://user-images.githubusercontent.com/84136752/213919382-f7eb8347-afc0-4e38-adc0-faef8e13edc0.gif) &nbsp; ![output3](https://user-images.githubusercontent.com/84136752/213919453-78c48c77-2fb1-4c96-85e1-06a2fe51e6d6.gif)
 
-## Installation 
+## Installation
+
 
 You need first to install this project, please check [INSTALL.md](INSTALL.md)
 
