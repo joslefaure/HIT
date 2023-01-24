@@ -469,7 +469,6 @@ def separate_roi_per_person(proposals, things, other_proposals, max_things):
 
 def separate_batch_per_person(proposals, things):
     """
-
     :param things: [b, max_others, c, t, h, w]
     :return [n, max_others, c, t, h, w]
     """

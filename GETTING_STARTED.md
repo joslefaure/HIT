@@ -56,3 +56,34 @@ The output files will be written to `OUTPUT_DIR/inference/detections`. To test t
 python evaluation_ucf24_jhmdb/pascalvoc.py --gtfolder groundtruths_jhmdb --detfolder PATH-TO-DETECTIONS-FOLDER
 ```
 In our case `PATH-TO-DETECTIONS-FOLDER` would be `OUTPUT_DIR/inference/detections`.
+
+### Train on AVA (unfinished)
+Change the `hit/path_catalog.py` file according to AVA's files
+```
+DATASETS = {
+        "ava_video_train_v2.2": {
+            "video_root": "AVA/clips/trainval",
+            "ann_file": "AVA/annotations/ava_train_v2.2_min.json",
+            "box_file": "",
+            "eval_file_paths": {
+                "csv_gt_file": "AVA/annotations/ava_train_v2.2.csv",
+                "labelmap_file": "AVA/annotations/ava_action_list_v2.2_for_activitynet_2019.pbtxt",
+                "exclusion_file": "AVA/annotations/ava_train_excluded_timestamps_v2.2.csv",
+            },
+            "object_file": "AVA/boxes/ava_train_det_object_bbox.json",
+            "keypoints_file": "AVA/annotations/keypoints.json",
+        },
+        "ava_video_val_v2.2": {
+            "video_root": "AVA/clips/trainval",
+            "ann_file": "AVA/annotations/ava_val_v2.2_min.json",
+            "box_file": "AVA/boxes/ava_val_det_person_bbox.json",
+            "eval_file_paths": {
+                "csv_gt_file": "AVA/annotations/ava_val_v2.2.csv",
+                "labelmap_file": "AVA/annotations/ava_action_list_v2.2_for_activitynet_2019.pbtxt",
+                "exclusion_file": "AVA/annotations/ava_val_excluded_timestamps_v2.2.csv",
+            },
+            "object_file": "AVA/boxes/ava_val_det_object_bbox.json",
+            "keypoints_file": "AVA/annotations/keypoints.json",
+        },
+    }
+```

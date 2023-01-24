@@ -176,9 +176,6 @@ class DatasetEngine(data.Dataset):
             boxes_tensor = torch.as_tensor(boxes, dtype=torch.float32).reshape(-1, 4)  # guard against no boxes
             boxes = BoxList(boxes_tensor, (im_w, im_h), mode="xywh").convert("xyxy")
 
-            # Decode the packed bits from uint8 to one hot, since AVA has 80 classes,
-            # it can be exactly denoted with 10 bytes, otherwise we may need to discard some bits.
-            # one_hot_label = np.unpackbits(packed_act, axis=1)
             one_hot_label = torch.as_tensor(packed_act, dtype=torch.uint8)
 
             boxes.add_field("labels", one_hot_label)
