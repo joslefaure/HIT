@@ -104,11 +104,11 @@ so we have to convert official csv annotations into COCO json format
 by running following commands.
 
     ```shell
-    python tools/csv2COCO.py \
+    python preprocess_data/ava/csv2COCO.py \
     --csv_path data/AVA/annotations/ava_train_v2.2.csv \
     --movie_list data/AVA/annotations/ava_file_names_trainval_v2.1.txt \
     --img_root data/AVA/keyframes/trainval
-    python tools/csv2COCO.py \
+    python preprocess_data/ava/csv2COCO.py \
     --csv_path data/AVA/annotations/ava_val_v2.2.csv \
     --movie_list data/AVA/annotations/ava_file_names_trainval_v2.1.txt \
     --img_root data/AVA/keyframes/trainval
@@ -157,8 +157,10 @@ These files should be placed at following locations.
 7. **Detect Keypoints.**
 We use [detectron2](https://github.com/facebookresearch/detectron2) as pose detector. Please install the project as indicated in their github repo.
 
-Then run `python preprocess_data/ava/keypoints_detection.py`
-Make sure the resulting file is in the `data/AVA/annotations/` directory.
+You can use `python preprocess_data/ava/keypoints_detection.py` as a reference to write a script to perform inference on AVA or you can directly download our files [here](https://drive.google.com/drive/folders/1WCtFKnTOpd9jSyUZYXTRJsM_sGrWqweb?usp=share_link) and put them in `data/AVA/annotations/`.
+
+8. **PS**
+Some modifications to the project are needed to train on AVA (especially the files `hit/dataset/datasets/jhmdb.py` and `config_files/hitnet.yaml`). Please refer to [Alphaction](https://github.com/MVIG-SJTU/AlphAction) for inspiration on how to change them or open an issue.
 
 
 
