@@ -174,7 +174,7 @@ class DatasetEngine(data.Dataset):
             boxes, packed_act = self.anns[idx]
 
             boxes_tensor = torch.as_tensor(boxes, dtype=torch.float32).reshape(-1, 4)  # guard against no boxes
-            boxes = BoxList(boxes_tensor, (im_w, im_h), mode="xywh").convert("xyxy")
+            boxes = BoxList(boxes_tensor, (im_w, im_h), mode="xyxy")
 
             one_hot_label = torch.as_tensor(packed_act, dtype=torch.uint8)
 
@@ -182,8 +182,7 @@ class DatasetEngine(data.Dataset):
         else:
             boxes, box_score = self.det_persons[idx]
             boxes_tensor = torch.as_tensor(boxes).reshape(-1, 4)
-            boxes = BoxList(boxes_tensor, (im_w, im_h), mode="xywh")
-            # .convert("xyxy")
+            boxes = BoxList(boxes_tensor, (im_w, im_h), mode="xyxy")
             boxes.add_field("det_score", torch.as_tensor(box_score))
 
         boxes = boxes.clip_to_image(remove_empty=True)
@@ -228,7 +227,6 @@ class DatasetEngine(data.Dataset):
                 return obj_boxes
             obj_boxes_tensor = torch.as_tensor(boxes).reshape(-1, 4)
             obj_boxes = BoxList(obj_boxes_tensor, (im_w, im_h), mode="xyxy")
-            # .convert("xyxy")
 
             scores = torch.as_tensor(box_score)
             obj_boxes.add_field("scores", scores)
