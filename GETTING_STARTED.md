@@ -57,6 +57,11 @@ python evaluation_ucf24_jhmdb/pascalvoc.py --gtfolder groundtruths_jhmdb --detfo
 ```
 In our case `PATH-TO-DETECTIONS-FOLDER` would be `OUTPUT_DIR/inference/detections`.
 
+#### Calculate video mAP
+- `cd HIT/evaluation_ucf24_jhmdb` 
+- Create the video tubes `python make_video_detection.py ../OUTPUT_DIR/inference/detections/{YOUR_FILE}.csv {YOUR_OUTPUT_FILE}.pkl`
+- Test the result `python compute_video_map.py JHMDB-GT.pkl {YOUR_OUTPUT_FILE}.pkl`
+
 ### Train on AVA (unfinished)
 Change the `hit/path_catalog.py` file according to AVA's files
 ```
