@@ -5,10 +5,8 @@ This project is the official implementation of our paper
 [Holistic Interaction Transformer Network for Action Detection](https://arxiv.org/abs/2210.12686) (**WACV 2023**), authored
 by Gueter Josmy Faure, Min-Hung Chen and Shang-Hong Lai. 
 
-### TO DO
-
-- [ ] Detailed data preparation for custom dataset
-- [ ] Pretrained Models
+### Updates
+- (03/06/2023) We have added the code to train/test on AVA [here](https://github.com/joslefaure/HIT_ava). Any issues about AVA, please open them from the other repo.
 
 
 ## Demo Video
