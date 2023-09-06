@@ -16,7 +16,7 @@ def make_cython_ext(name, module, sources):
     extra_compile_args = None
     if platform.system() != 'Windows':
         extra_compile_args = {
-            'cxx': ['-Wno-unused-function', '-Wno-write-strings']
+            'cxx': ['-Wno-unused-function', '-Wno-write-strings', '-Wno-cpp']
         }
 
     extension = Extension(
