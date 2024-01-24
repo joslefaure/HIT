@@ -13,7 +13,7 @@ The pretrained backbones, pretrained on Kinetics dataset is given by [Alphaction
 
 | config | backbone  | mAP | model |
 | ------------- | ------------- | ------------- | ------------- |
-| [hitnet](config_files/hitnet.yaml) | SlowFast-R50 | 83.8 | [[link]]()
+| [hitnet](config_files/hitnet.yaml) | SlowFast-R50 | 83.8 | [[link]](https://drive.google.com/file/d/1YwknoD4incjAJWQJajT8eRKqXmX0pqie/view?usp=sharing)
 
 ### AVA Model
 
