@@ -2,15 +2,17 @@
 
 ### Easy Version
 
-1. Download the zip file from [[here]](https://drive.google.com/file/d/1rwj3qo4r25e1_a3zB8kKwjKh1kFQCmU8/view?usp=sharing). 
+1. Download the annotations files from [[here]](https://drive.google.com/file/d/1izUZrVxA7HMZY2v5iIZSKSMI1XHgECkD/view?usp=sharing). 
 
-2. run following commands to unzip the file and create a 
-symbolic link to the extracted files.
+2. Extract the file and put the annotations in `HIT/data/jhmdb/annotations`
+3. Download the jhmdb videos from their official [website](https://jhmdb.is.tue.mpg.de/), format the `HIT/data/jhmdb/videos` directory as follows:
 
     ```bash
-    cd /path/to/HIT
-    mkdir data
-    unzip jhmdb.zip -d HIT/data/
+    {video_name}
+        |_ 00001.png
+        |_ 00002.png
+    ...
+    
     ```
 
 ### Prepare AVA dataset (Mostly taken from AlphAction) -- unfinished
