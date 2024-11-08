@@ -14,12 +14,12 @@ class NL(nn.Module):
 
         self.hidden_dim = hidden_dim
 
-        self.conv_q = nn.Conv3d(hidden_dim, hidden_dim, 1, padding=0, bias=False)
-        self.conv_k = nn.Conv3d(hidden_dim, hidden_dim, 1, padding=0, bias=False)
-        self.conv_v = nn.Conv3d(hidden_dim, hidden_dim, 1, padding=0, bias=False)
+        self.conv_q = nn.Conv3d(in_channels=hidden_dim, out_channels=hidden_dim, kernel_size=1, padding=0, bias=False)
+        self.conv_k = nn.Conv3d(in_channels=hidden_dim, out_channels=hidden_dim, kernel_size=1, padding=0, bias=False)
+        self.conv_v = nn.Conv3d(in_channels=hidden_dim, out_channels=hidden_dim, kernel_size=1, padding=0, bias=False)
         
-        self.conv = nn.Conv3d(hidden_dim, hidden_dim, 1, padding=0, bias=False)
-        self.conv_out = nn.Conv3d(hidden_dim, out_dim, 1, padding=0, bias=False)
+        self.conv = nn.Conv3d(in_channels=hidden_dim, out_channels=hidden_dim, kernel_size=1, padding=0, bias=False)
+        self.conv_out = nn.Conv3d(in_channels=hidden_dim, out_channels=out_dim, kernel_size=1, padding=0, bias=False)
         self.norm = nn.GroupNorm(1, hidden_dim, affine=True)
         self.dp = nn.Dropout(0.2)
 
@@ -58,16 +58,16 @@ class InteractionUnit(nn.Module):
         bias = not structure_config.NO_BIAS
         init_std = structure_config.CONV_INIT_STD
 
-        self.query = nn.Conv3d(dim_person, dim_inner, 1, bias)
+        self.query = nn.Conv3d(in_channels=dim_person, out_channels=dim_inner, kernel_size=1, bias=bias)
         init_layer(self.query, init_std, bias)
 
-        self.key = nn.Conv3d(dim_other, dim_inner, 1, bias)
+        self.key = nn.Conv3d(in_channels=dim_other, out_channels=dim_inner, kernel_size=1, bias=bias)
         init_layer(self.key, init_std, bias)
 
-        self.value = nn.Conv3d(dim_other, dim_inner, 1, bias)
+        self.value = nn.Conv3d(in_channels=dim_other, out_channels=dim_inner, kernel_size=1, bias=bias)
         init_layer(self.value, init_std, bias)
 
-        self.out = nn.Conv3d(dim_inner, dim_out, 1, bias)
+        self.out = nn.Conv3d(in_channels=dim_inner, out_channels=dim_out, kernel_size=1, bias=bias)
         if structure_config.USE_ZERO_INIT_CONV:
             out_init = 0
         else:
@@ -81,7 +81,7 @@ class InteractionUnit(nn.Module):
         self.use_ln = structure_config.LAYER_NORM
 
         if dim_person != dim_out:
-            self.shortcut = nn.Conv3d(dim_person, dim_out, 1, bias)
+            self.shortcut = nn.Conv3d(in_channels=dim_person, out_channels=dim_out, kernel_size=1, bias=bias)
             init_layer(self.shortcut, init_std, bias)
         else:
             self.shortcut = None
@@ -185,24 +185,24 @@ class HITStructure(nn.Module):
         self.has_M = has_memory(structure_cfg)
         self.has_H = has_hand(structure_cfg)
 
-        self.person_dim_reduce = nn.Conv3d(dim_person, self.dim_inner, 1, bias)  # reduce person query
+        self.person_dim_reduce = nn.Conv3d(in_channels=dim_person, out_channels=self.dim_inner, kernel_size=1, bias=bias)  # reduce person query
         init_layer(self.person_dim_reduce, conv_init_std, bias)
         self.reduce_dropout = nn.Dropout(structure_cfg.DROPOUT)
 
         # Init Temporal 
-        self.mem_dim_reduce = nn.Conv3d(dim_mem, self.dim_inner, 1, bias)
+        self.mem_dim_reduce = nn.Conv3d(in_channels=dim_mem, out_channels=self.dim_inner, kernel_size=1, bias=bias)
         init_layer(self.mem_dim_reduce, conv_init_std, bias)
         
         # Init Person
-        self.person_key_dim_reduce = nn.Conv3d(dim_person, self.dim_inner, 1, bias)  # reduce person key
+        self.person_key_dim_reduce = nn.Conv3d(in_channels=dim_person, out_channels=self.dim_inner, kernel_size=1, bias=bias)  # reduce person key
         init_layer(self.person_key_dim_reduce, conv_init_std, bias)
         
         # Init Object
-        self.object_dim_reduce = nn.Conv3d(dim_person, self.dim_inner, 1, bias)
+        self.object_dim_reduce = nn.Conv3d(in_channels=dim_person, out_channels=self.dim_inner, kernel_size=1, bias=bias)
         init_layer(self.object_dim_reduce, conv_init_std, bias)
         
         # Init Hand
-        self.hand_dim_reduce = nn.Conv3d(dim_person, self.dim_inner, 1, bias)
+        self.hand_dim_reduce = nn.Conv3d(in_channels=dim_person, out_channels=self.dim_inner, kernel_size=1, bias=bias)
         init_layer(self.hand_dim_reduce, conv_init_std, bias)
             
                         
@@ -346,7 +346,7 @@ class HITNet(SerialHITStructure):
         self.dense_params_lateral = nn.Parameter(init_tensor_lateral)
         
         self.softmax = nn.Softmax(dim=0)
-        self.conv_reduce = nn.Conv3d(dim_mem, self.dim_inner, 1, bias=False)
+        self.conv_reduce = nn.Conv3d(in_channels=dim_mem, out_channels=self.dim_inner, kernel_size=1, bias=False)
         
 
         self.non_local = NL(hidden_dim = 2*self.dim_inner, out_dim = self.dim_inner)
