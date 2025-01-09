@@ -48,6 +48,9 @@ this paper:
 }
 ```
 
+## LICENCE
+MIT
+
 ## Acknowledgement
 We are very grateful to the authors of [AlphAction](https://github.com/MVIG-SJTU/AlphAction) for open-sourcing their code from which this repository is heavily sourced. If your find this research useful, please consider citing their paper as well.
 
